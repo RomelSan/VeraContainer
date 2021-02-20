@@ -11,7 +11,7 @@ So your personal documents & files will stay secure.
 3. Use it, and unmount after use.
 
 ## Technologies:
-Visual Studio 2017 v15.8  
+Visual Studio 2017 v15.8 - Updated to Visual Studio 2019  
 Net Framework 4.7.2  
 
 ## Requirements
@@ -22,13 +22,14 @@ Net Framework 4.7.2 (Runtime)
 ***Create Virtual Disk***
 ```
 diskpart
-create vdisk file="C:\Secret.vhdx" maximum=1000
+create vdisk file="C:\Secret.vhdx" maximum=1000 type=expandable
 attach vdisk
 create partition primary
 assign letter=V
 format fs=ntfs quick
 exit
 ```
+`Type` can be `fixed` or `expandable`
 
 ***Detach***
 ```
