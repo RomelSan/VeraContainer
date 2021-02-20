@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VeraContainer"
         mc:Ignorable="d"
-        Title="Vera Container v1.0" Height="276" Width="607" Icon="if_shop-13_730798.ico" ResizeMode="CanMinimize">
+        Title="Vera Container v1.1" Height="276" Width="607" Icon="if_shop-13_730798.ico" ResizeMode="CanMinimize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="69*"/>
@@ -16,18 +16,19 @@
         <Label Content="Filename:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="21,13,0,0" Grid.ColumnSpan="2"/>
         <TextBox x:Name="fileSize" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="72" Margin="3,70,0,0" Text="100" RenderTransformOrigin="2.714,1.449" MaxLength="6" Grid.Column="1"/>
         <Label Content="Size" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="31,67,0,0"/>
-        <Button x:Name="createVHDX_button" Content="Create Container" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116" Margin="30,114,0,0" Click="createVHDX_button_Click" Grid.ColumnSpan="2"/>
-        <Button x:Name="mountVHDX_button" Content="Mount Container" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116" Margin="93,114,0,0" Click="mountVHDX_button_Click" Grid.Column="1"/>
+        <Button x:Name="createVHDX_button" Content="Create Container" HorizontalAlignment="Left" VerticalAlignment="Top" Width="132" Margin="25,114,0,0" Click="createVHDX_button_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="mountVHDX_button" Content="Mount Container" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116" Margin="99,114,0,0" Click="mountVHDX_button_Click" Grid.Column="1"/>
         <Button x:Name="unmountVHDX_button" Content="Unmount Container" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116" Margin="227,114,0,0" Click="unmountVHDX_button_Click" Grid.Column="1"/>
         <Button x:Name="bitlocker_button" Content="BitLocker" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116" Margin="361,114,0,0" Click="bitlocker_button_Click" Grid.Column="1"/>
         <Button x:Name="saveFile_button" Content="New File" HorizontalAlignment="Left" VerticalAlignment="Top" Width="87" Margin="413,40,0,0" Click="saveFile_button_Click" Grid.Column="1"/>
         <ProgressBar x:Name="progressBar_1" HorizontalAlignment="Left" Height="17" VerticalAlignment="Top" Width="500" Margin="46,182,0,0" Grid.ColumnSpan="2"/>
-        <Button x:Name="mountVHDX_read_button" Content="Mount Read Only" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116" Margin="93,145,0,0" Click="mountVHDX_read_button_Click" Grid.Column="1"/>
+        <Button x:Name="mountVHDX_read_button" Content="Mount Read Only" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116" Margin="99,145,0,0" Click="mountVHDX_read_button_Click" Grid.Column="1"/>
         <Label x:Name="label_credits" Content="Author: Romel Vera" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="407,209,0,0" Grid.Column="1"/>
         <Button x:Name="diskManagement_button" Content="Disk Management" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116" Margin="361,145,0,0" Click="diskManagement_button_Click" Grid.Column="1"/>
         <ComboBox x:Name="combobox_bytes" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="93,71,0,0" SelectedIndex="0" Grid.Column="1">
             <ComboBoxItem Content="Megabytes"/>
             <ComboBoxItem Content="Gigabytes"/>
         </ComboBox>
+        <Button x:Name="createVHDX_button_fixed" Content="Create Container Fixed" HorizontalAlignment="Left" VerticalAlignment="Top" Width="132" Margin="25,145,0,0" Click="createVHDX_button_fixed_Click" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

@@ -51,7 +51,30 @@ namespace VeraContainer
         private void createVHDx(string filename, int size)
         {
             string vdisk = "create vdisk file=" + "\"" + filename + "\"";
-            string vsize = "maximum=" + size;
+            string vsize = "maximum=" + size + " " + "type=expandable";
+            string vdisk_vsize = vdisk + " " + vsize;
+
+            Process p = new Process();                                    // new instance of Process class
+            p.StartInfo.UseShellExecute = false;                          // do not start a new shell
+            p.StartInfo.RedirectStandardOutput = true;                    // Redirects the on screen results
+            p.StartInfo.FileName = @"C:\Windows\System32\diskpart.exe";   // executable to run
+            p.StartInfo.RedirectStandardInput = true;                     // Redirects the input commands
+            p.StartInfo.CreateNoWindow = true;                            // Hide the process Window
+            p.Start();                                                    // Starts the process
+            p.StandardInput.WriteLine(vdisk_vsize);                       // Issues commands to diskpart
+            p.StandardInput.WriteLine("attach vdisk");
+            p.StandardInput.WriteLine("create partition primary");
+            p.StandardInput.WriteLine("assign");
+            p.StandardInput.WriteLine("format fs=ntfs quick");
+            p.StandardInput.WriteLine("exit");
+            string output = p.StandardOutput.ReadToEnd();                 // Places the output to a variable
+            p.WaitForExit();                                              // Waits for the exe to finish
+            // Console.WriteLine(output);
+        }
+        private void createVHDx_fixed(string filename, int size)
+        {
+            string vdisk = "create vdisk file=" + "\"" + filename + "\"";
+            string vsize = "maximum=" + size + " " + "type=fixed";
             string vdisk_vsize = vdisk + " " + vsize;
 
             Process p = new Process();                                    // new instance of Process class
@@ -112,6 +135,7 @@ namespace VeraContainer
         private void allDisable()
          {
                 createVHDX_button.IsEnabled = false;
+                createVHDX_button_fixed.IsEnabled = false;
                 mountVHDX_button.IsEnabled = false;
                 mountVHDX_read_button.IsEnabled = false;
                 bitlocker_button.IsEnabled = false;
@@ -124,6 +148,7 @@ namespace VeraContainer
         private void allEnable()
         {
             createVHDX_button.IsEnabled = true;
+            createVHDX_button_fixed.IsEnabled = true;
             mountVHDX_button.IsEnabled = true;
             mountVHDX_read_button.IsEnabled = true;
             bitlocker_button.IsEnabled = true;
@@ -192,6 +217,54 @@ namespace VeraContainer
                 progressBar_1.IsIndeterminate = false;
                 allEnable();
             };      
+            worker.RunWorkerAsync();
+        }
+
+        private void createVHDX_button_fixed_Click(object sender, RoutedEventArgs e)
+        {
+            string filename = fileSelected.Text;
+            if (File.Exists(filename)) { MessageBox.Show("The container is already there", "Info", MessageBoxButton.OK, MessageBoxImage.Information); return; }
+            allDisable();
+            progressBar_1.IsIndeterminate = true;
+            int number = 0;
+            int size = 0;
+            try
+            {
+                number = Convert.ToInt32(fileSize.Text);
+                if (number < 1) { number = 100; combobox_bytes.SelectedIndex = 0; }
+                if (combobox_bytes.SelectedIndex == 0)
+                {
+                    size = number * 1;
+                }
+                if (combobox_bytes.SelectedIndex == 1)
+                {
+                    size = number * 1000;
+                }
+            }
+            catch
+            {
+                size = 100;
+            }
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += (o, ea) =>
+            {
+                try
+                {
+                    createVHDx_fixed(filename, size);
+                }
+                catch (Exception x)
+                {
+                    MessageBox.Show(x.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Application.Current.Dispatcher.Invoke(new Action(() => progressBar_1.IsIndeterminate = false));
+                    Application.Current.Dispatcher.Invoke(new Action(() => allEnable()));
+                }
+            };
+            worker.RunWorkerCompleted += (o, ea) =>
+            {
+                progressBar_1.IsIndeterminate = false;
+                allEnable();
+            };
             worker.RunWorkerAsync();
         }
 
@@ -301,5 +374,6 @@ namespace VeraContainer
             catch { }
         }
         #endregion
+
     }
 }
